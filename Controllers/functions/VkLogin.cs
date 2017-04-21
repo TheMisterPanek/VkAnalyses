@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using VK_Analyze.Models.EntityFramework;
+
 using VkNet;
 using VkNet.Enums.Filters;
 

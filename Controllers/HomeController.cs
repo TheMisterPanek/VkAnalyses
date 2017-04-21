@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using VK_Analyze.Controllers.functions;
 using VK_Analyze.Models;
-using VK_Analyze.Models.EntityFramework;
+
 using VkNet;
 using VkNet.Utils;
 
@@ -58,7 +58,7 @@ namespace VK_Analyze.Controllers
                 }
                 catch(Exception)
                 {
-                    ViewBag.Users = new User[0];
+                    ViewBag.Users = new VkNet.Model.User[0];
                 }
             }
             return View();

@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VK_Analyze.Controllers.functions;
 using VK_Analyze.Models;
-using VK_Analyze.Models.EntityFramework;
+
 
 namespace VK_Analyze.Controllers
 {
@@ -55,9 +55,8 @@ namespace VK_Analyze.Controllers
         {
             VkNet.Model.User user = null;
             if (VkLogin.IsAuthorized(vk))
-            { 
-                user = vk.Users.Get(vk.
-                    ,(VkNet.Enums.Filters.ProfileFields.All));
+            {
+                user = vk.Users.Get(vk.Account.GetProfileInfo().ScreenName,VkNet.Enums.Filters.ProfileFields.All);
             }
             return user;
         }
