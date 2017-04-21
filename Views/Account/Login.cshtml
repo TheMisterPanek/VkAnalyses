@@ -1,0 +1,54 @@
+﻿@using VK_Analyze.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Выполнить вход";
+    VkNet.Model.User user = ViewBag.User;
+}
+
+
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        @if (ViewBag.User == null)
+        {
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <h4>Используйте локальную учетную запись для входа.</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Token, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Token, new { @class = "form-control" })
+                        <p><input type="submit" value="Войти" /></p>
+                    </div>
+                </div>
+            }
+            
+           
+            
+            <a href="https://oauth.vk.com/authorize?client_id=5793579&scope=offline,group,photos,wall&display=page&response_type=token&redirect_uri=https://www.vk.com/blank">Скопируйте acces token из строки браузера</a>
+
+        </section>
+        }
+        else
+        {
+
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@user.Photo100" alt="Ваше фото" />
+                </div>
+                <div class="col-md-6">
+                    <h5>Добро пожаловать, @user.FirstName</h5>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

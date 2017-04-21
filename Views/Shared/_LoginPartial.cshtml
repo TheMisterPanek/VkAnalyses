@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    VkNet.Model.User user = ViewBag.User;
+
+}
+
+@if (user != null)
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <h4 style="color:white;">@user.FirstName @user.LastName</h4>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Авторизация", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
