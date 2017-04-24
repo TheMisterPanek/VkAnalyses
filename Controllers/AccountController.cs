@@ -43,8 +43,8 @@ namespace VK_Analyze.Controllers
             {
                 HttpCookie cookie = new HttpCookie("VkAnalyses");
                 cookie["token"] = model.Token;
-                cookie.Expires = cookie.Expires.AddDays(1);
-                Response.Cookies.Add(cookie);
+               //cookie.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Set(cookie);
             }
             VkNet.VkApi vk = VkLogin.GetInstance(model.Token);
             ViewBag.User = GetUserInform(vk);
@@ -54,10 +54,7 @@ namespace VK_Analyze.Controllers
         private VkNet.Model.User GetUserInform(VkNet.VkApi vk,int id = 1)
         {
             VkNet.Model.User user = null;
-            if (VkLogin.IsAuthorized(vk))
-            {
-                user = vk.Users.Get(vk.Account.GetProfileInfo().ScreenName,VkNet.Enums.Filters.ProfileFields.All);
-            }
+            user = VkAccount.GetAccountInfo(vk);
             return user;
         }
 
