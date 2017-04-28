@@ -39,7 +39,7 @@ namespace VK_Analyze.Controllers
         public ActionResult Login(LoginViewModel model)
         {
             HttpCookie cookieReq = Request.Cookies["VkAnalyses"];
-            if (cookieReq == null)
+            if (cookieReq == null || !VkLogin.isValidToken(cookieReq["token"]))
             {
                 HttpCookie cookie = new HttpCookie("VkAnalyses");
                 cookie["token"] = model.Token;
