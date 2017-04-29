@@ -1,30 +1,43 @@
 ﻿@using VK_Analyze.Models
+@using VK_Analyze.Controllers.supportFunction;
 @model UserFriendsView
 
-@{ 
-     ViewBag.Title = "Друзья";
 
+
+@{
+    ViewBag.Title = "Друзья";
+
+    List<CityInfo> citys = ViewBag.Citys;
+    citys = (from x in citys orderby x.CountFriends descending select x).ToList();
+
+
+    float countCitys = 0;
+    foreach (CityInfo item in citys)
+    {
+        countCitys += item.CountFriends;
+    }
+
+    double percent = 0;
 }
 
 <div class="panel-default">
-    @Html.BeginForm("Friends","Home",FormMethod.Get,new { @class = "form-horizontal"})
-    {
-        <h3>Список друзей</h3>
-        @Html.TextBoxFor(m=>m.UserID,"", new { @class = "input-xlarge" })
-    }
-
-   
     <div class="container">
-        @foreach (VkNet.Model.User item in ViewBag.Users)
-        {
-            <div class="row">
-                <div class="col-md-3"><img src="@item.Photo100" alt="Ваше фото"/></div>
-                <div class="col-md-3">@item.Id</div>
-                <div class="col-md-3">@item.FirstName @item.LastName</div>
-                
-
-            </div>
-        }
-        
+        <div class="row">
+            @foreach (CityInfo city in citys)
+            {
+               percent = Math.Round(city.CountFriends / countCitys, 4) * 100;
+                if (percent > 1)
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="font-size:@MathFunctions.Clamp((int)percent,10,70)px">
+                                <div class="col-md-4">@city.City</div>
+                                <div class="col-md-2">@percent%</div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+        </div>
     </div>
 </div>
