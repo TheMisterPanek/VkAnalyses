@@ -136,6 +136,6 @@ D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\bin\ru\Microsoft.Owin.Security
 D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\bin\ru\Microsoft.Owin.Security.Google.resources.dll
 D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\bin\ru\Microsoft.Owin.Security.Twitter.resources.dll
 D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\obj\Debug\VK_Analyze.csprojResolveAssemblyReference.cache
 D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\obj\Debug\VK_Analyze.dll
 D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\obj\Debug\VK_Analyze.pdb
+D:\Program\C SHARP\Projects\VK_Analyze\VK_Analyze\obj\Debug\VK_Analyze.csprojResolveAssemblyReference.cache

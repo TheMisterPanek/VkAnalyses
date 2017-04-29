@@ -17,7 +17,10 @@ namespace VK_Analyze.Controllers.functions
         {
             if (userInfo != null)
             {
-                return userInfo.IsAuthorized;
+                if(userInfo.IsAuthorized)
+                {
+                    return isValidToken(userInfo.Token);
+                }
             }
             return false;
         }
@@ -38,6 +41,8 @@ namespace VK_Analyze.Controllers.functions
                 try
                 {
                     vk.Authorize(token);
+                    //Для провоцирования ошибки
+                    long uid =  vk.Users.Get(vk.Account.GetProfileInfo().ScreenName, VkNet.Enums.Filters.ProfileFields.All).Id;
                     return true;
                 }
                 catch (Exception)
