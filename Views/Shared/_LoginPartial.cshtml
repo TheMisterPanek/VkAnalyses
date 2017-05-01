@@ -1,15 +1,19 @@
 ﻿@using Microsoft.AspNet.Identity
 
 @{
-    VkNet.Model.User user = ViewBag.User;
-
+    string userName = "";
+    VkNet.VkApi vk = (VkNet.VkApi)Session["VkApi"];
+    if (vk != null)
+    {
+       userName  = vk.Account.GetProfileInfo().FirstName;
+    }
 }
 
-@if (user != null)
+@if (!string.IsNullOrEmpty(userName))
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <h4 style="color:white;">@user.FirstName @user.LastName</h4>
+            <h4 style="color:white;">@userName</h4>
         </li>
     </ul>
 }

@@ -36,6 +36,7 @@ namespace VK_Analyze.Controllers.functions
 
         public static bool isValidToken(string token)
         {
+
             using (VkApi vk = new VkApi())
             {
                 try
@@ -47,8 +48,8 @@ namespace VK_Analyze.Controllers.functions
                 }
                 catch (Exception)
                 {
-                    return false;
                 }
+                return false;
             }
          
         }

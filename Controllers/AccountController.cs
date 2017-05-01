@@ -10,14 +10,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VK_Analyze.Controllers.functions;
 using VK_Analyze.Models;
-
+using VkNet;
 
 namespace VK_Analyze.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-       
+
         public AccountController()
         {
         }
@@ -26,9 +26,8 @@ namespace VK_Analyze.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            HttpCookie cookieReq = Request.Cookies["VkAnalyses"];
-            CookieTokenWorker cookie = new CookieTokenWorker(cookieReq);
-            ViewBag.User = GetUserInform(cookie.GetVkApiFromCookie());
+            VkApi vk = (VkApi)Session["VkApi"];
+            ViewBag.User = GetUserInform(vk);
             return View();
         }
 
@@ -38,23 +37,16 @@ namespace VK_Analyze.Controllers
         [AllowAnonymous]
         public ActionResult Login(LoginViewModel model)
         {
-            HttpCookie cookieReq = Request.Cookies["VkAnalyses"];
-            if (cookieReq == null || !VkLogin.isValidToken(cookieReq["token"]))
-            {
-                HttpCookie cookie = new HttpCookie("VkAnalyses");
-                cookie["token"] = model.Token;
-               //cookie.Expires = DateTime.Now.AddDays(1);
-                Response.Cookies.Set(cookie);
-            }
-            VkNet.VkApi vk = VkLogin.GetInstance(model.Token);
+            VkApi vk = new VkApi();
+            vk.Authorize(model.Token);
+            Session["VkApi"] = vk;
             ViewBag.User = GetUserInform(vk);
             return View();
         }
 
-        private VkNet.Model.User GetUserInform(VkNet.VkApi vk,int id = 1)
+        private VkNet.Model.User GetUserInform(VkNet.VkApi vk, int id = 1)
         {
-            VkNet.Model.User user = null;
-            user = VkAccount.GetAccountInfo(vk);
+            VkNet.Model.User user  = VkAccount.GetAccountInfo(vk);
             return user;
         }
 
@@ -69,17 +61,17 @@ namespace VK_Analyze.Controllers
             // Запрос перенаправления к внешнему поставщику входа
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
-        
 
-    
-    
-    
-   
 
-       
+
+
+
+
+
+
 
         #region Вспомогательные приложения
-     
+
 
         private void AddErrors(IdentityResult result)
         {
@@ -116,7 +108,7 @@ namespace VK_Analyze.Controllers
             public string RedirectUri { get; set; }
             public string UserId { get; set; }
 
-         
+
         }
         #endregion
     }

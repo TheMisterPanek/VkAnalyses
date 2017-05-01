@@ -26,18 +26,19 @@ namespace VK_Analyze.Controllers
 
         public ActionResult Index()
         {
-        
             return View();
         }
 
-      
+        public ActionResult PageWorker()
+        {
+            return View();
+        }
 
         [HttpGet]
         public ActionResult Friends(string userID = "0")
         {
-            HttpCookie cookieReq = Request.Cookies["VkAnalyses"];
-            CookieTokenWorker cookie = new CookieTokenWorker(cookieReq);
-            Dictionary<string, int> Dict = VkFriends.AnalyseFriends(cookie.GetVkApiFromCookie());
+            VkApi vk = (VkApi)Session["VkApi"];
+            Dictionary<string, int> Dict = VkFriends.AnalyseFriends(vk);
 
             ViewBag.Citys = supportFunction.Converter.ToCityInfoCollection(Dict).ToList();
             return View();

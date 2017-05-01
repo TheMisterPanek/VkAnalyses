@@ -1,4 +1,14 @@
-﻿
+﻿@using VkNet;
+
+@{ 
+    VkApi vk = (VkApi)Session["VkApi"];
+    string userName = "";
+    if(vk!=null)
+    {
+        userName = vk.Account.GetProfileInfo().FirstName;
+    }
+
+}
 
 <!DOCTYPE html>
 <html>
@@ -26,9 +36,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Друзья", "Friends", "Home")</li>
+                    @if (!string.IsNullOrEmpty(userName))
+                    {
+                        @*<li>@Html.ActionLink("О программе", "About", "Home")</li>
+                        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
+                        <li>@Html.ActionLink("Друзья", "Friends", "Home")</li>
+                        <li>@Html.ActionLink("Работа со страницей", "PageWorker", "Home")</li>
+
+                    }   
                 </ul>
                 @Html.Partial("_LoginPartial")
 
