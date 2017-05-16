@@ -7,31 +7,48 @@
 
 
 
-<h2>@ViewBag.Title.</h2>
 <div class="row">
     <div class="col-md-8">
         @if (ViewBag.User == null)
         {
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                <h4>Используйте локальную учетную запись для входа.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Token, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Token, new { @class = "form-control" })
-                        <p><input type="submit" value="Войти" /></p>
+            <h2>@ViewBag.Title.</h2>
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <h4>Используйте локальную учетную запись для входа.</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Token, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Token, new { @class = "form-control" })
+                            <p><input type="submit" value="Войти" /></p>
+                        </div>
                     </div>
-                </div>
-            }
-            
-           
-            
-            <a href="https://oauth.vk.com/authorize?client_id=5793579&scope=offline,group,photos,wall&display=page&response_type=token&redirect_uri=https://www.vk.com/blank">Скопируйте acces token из строки браузера</a>
+                }
 
-        </section>
+
+
+                <a href="https://oauth.vk.com/authorize?client_id=5793579&scope=offline,group,photos,wall&display=page&response_type=token&redirect_uri=https://www.vk.com/blank">Скопируйте acces token из строки браузера</a>
+            </section>
+            <hr />
+
+                <h1 style="text-align:center">Для авторизации вам необходимо</h1>
+                <hr />
+                <div class="help-block" style="align-content:center">
+                    <h4>Нажать на кнопку "Скопируйте acces token из строки браузера"</h4>
+                    <img src="http://image.prntscr.com/image/0c81a45b1c204b77b47e424d3a0e6315.png" alt="Куда жать" />
+                    <hr />
+                    <h4>После чего авторизуйтесь ВКонтакте через форму авторизации</h4>
+                    <img src="http://image.prntscr.com/image/980cf190fee049738a8c5c4105097d0e.png" alt="Авторизация ВКонтакте" />
+                    <hr />
+                    <h4>Затем скопировать адрес из адресной строки</h4>
+                    <img src="http://image.prntscr.com/image/e745c25806754caaafdfb98602a5c52e.png" alt="адрес из строки" />
+                    <hr />
+                    <h4>После чего, вставить его в поле "Токен" и нажать на кнопку "Войти"</h4>
+                    <img src="http://image.prntscr.com/image/0143c599f6b04281bf83baa2d87e941a.png" alt="Вход" />
+                </div>
+
         }
         else
         {

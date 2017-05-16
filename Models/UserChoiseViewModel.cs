@@ -6,11 +6,10 @@ using System.Web;
 
 
 namespace VK_Analyze.Models
-{ 
-        public class UserFriendsView
-        {
-            [Required(ErrorMessage = "идентификатор не может быть пустым")]
-            public int UserID { get; set; }
-        }
+{
+    public class UserFriendsView
+    {
+        public string ScreenName { get; set; }
+    }
 
 }

@@ -20,5 +20,11 @@ namespace VK_Analyze.Controllers.functions
             return user;
         }
 
+        public static VkNet.Model.User GetAccountInfo(VkApi vk, string screenName)
+        {
+            VkNet.Model.User user = vk.Users.Get(screenName, VkNet.Enums.Filters.ProfileFields.All);
+            return user;
+        }
+
     }
 }

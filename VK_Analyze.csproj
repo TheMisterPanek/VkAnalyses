@@ -208,7 +208,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\functions\CookieTokenWorker.cs" />
-    <Compile Include="Controllers\functions\UserDataBase.cs" />
+    <Compile Include="Controllers\functions\Parser.cs" />
     <Compile Include="Controllers\functions\VkAccount.cs" />
     <Compile Include="Controllers\functions\VkFriends.cs" />
     <Compile Include="Controllers\functions\VkLogin.cs" />
@@ -217,6 +217,8 @@
     <Compile Include="Controllers\supportFunction\CityInfo.cs" />
     <Compile Include="Controllers\supportFunction\Converter.cs" />
     <Compile Include="Controllers\supportFunction\MathFunctions.cs" />
+    <Compile Include="Controllers\supportFunction\UserInfo_Likes.cs" />
+    <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -285,10 +287,13 @@
     <Content Include="Views\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Friends.cshtml" />
-    <Content Include="Views\Home\PageWorker.cshtml" />
+    <Content Include="Views\Worker\PageWorker.cshtml" />
+    <Content Include="Views\Worker\PublicationWorker.cshtml" />
+    <Content Include="Views\Home\FriendsDiagram.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

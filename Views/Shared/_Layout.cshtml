@@ -1,9 +1,9 @@
 ﻿@using VkNet;
 
-@{ 
+@{
     VkApi vk = (VkApi)Session["VkApi"];
     string userName = "";
-    if(vk!=null)
+    if (vk != null)
     {
         userName = vk.Account.GetProfileInfo().FirstName;
     }
@@ -13,13 +13,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script type="text/javascript" src="//vk.com/js/api/openapi.js?143"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
@@ -39,11 +39,25 @@
                     @if (!string.IsNullOrEmpty(userName))
                     {
                         @*<li>@Html.ActionLink("О программе", "About", "Home")</li>
-                        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
+                            <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
                         <li>@Html.ActionLink("Друзья", "Friends", "Home")</li>
-                        <li>@Html.ActionLink("Работа со страницей", "PageWorker", "Home")</li>
+                       <li class="dropdown">
 
-                    }   
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                               Работа с аккаунтом
+                               <span class="caret"></span>
+                           </a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Работа со страницей", "PageWorker", "Worker")
+                                <li>
+                                    @Html.ActionLink("Работа со стеной", "PageWorker", "Worker")
+                                </li>
+                            </ul>
+                        </li>
+
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
 

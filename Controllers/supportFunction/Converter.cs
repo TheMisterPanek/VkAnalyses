@@ -18,5 +18,33 @@ namespace VK_Analyze.Controllers.supportFunction
 
             return cityInfoCollection;
         }
+
+        public static string ToJSArray(IEnumerable<KeyValuePair<string, int>> value)
+        {
+            return ToJSArray("","",value);
+        }
+
+
+        public static string ToJSArray(string firstColumnName, string secondColumnName, IEnumerable<KeyValuePair<string,int>> value)
+        {
+            string text = "";
+            text += "[";
+            if(!string.IsNullOrEmpty(firstColumnName) && !string.IsNullOrEmpty(secondColumnName))
+            {
+                text += $"['{firstColumnName}','{secondColumnName}'],";
+            }
+            foreach (KeyValuePair<string,int> item in value)
+            {
+                text += $"['{item.Key}',{item.Value}],";    
+            }
+            text = text.Remove(text.Length-1, 1);
+            text += "]";
+            return text;
+        }
+
+
     }
+
+
+
 }

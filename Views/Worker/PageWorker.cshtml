@@ -1,0 +1,24 @@
+﻿@using VK_Analyze.Controllers.supportFunction;
+@{
+   
+    List<UserInfo_Likes> likesUserWithName = ViewBag.likesUser;
+
+    int average = (from x in likesUserWithName select x.Count).Average();
+}
+
+
+<div class="body-content">
+    <div class="panel-body">
+        @foreach (UserInfo_Likes item in likesUserWithName)
+        {
+            if (item.Count >= average)
+            {
+            <div class="row">
+                <div class="col-md-4">@item.UserName (<a href="@string.Format("https://www.vk.com/id{0}", item.Uid)" target="_blank">тут</a>)</div>
+                <div class="col-md-4">@item.Count</div>
+            </div>
+
+            }
+        }
+    </div>
+</div>

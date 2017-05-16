@@ -26,7 +26,16 @@ namespace VK_Analyze.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            VkApi vk = (VkApi)Session["VkApi"];
+            CookieTokenWorker cookie = new CookieTokenWorker(Request.Cookies["VkAnalyses"]);
+            VkApi vk = cookie.GetVkApiFromCookie();
+            if (vk == null)
+            {
+                vk = (VkApi)Session["VkApi"];
+            }
+            else
+            {
+                Session["VkApi"] = vk;
+            }
             ViewBag.User = GetUserInform(vk);
             return View();
         }
@@ -38,7 +47,12 @@ namespace VK_Analyze.Controllers
         public ActionResult Login(LoginViewModel model)
         {
             VkApi vk = new VkApi();
-            vk.Authorize(model.Token);
+            HttpCookie cookie = new HttpCookie("VkAnalyses");
+            Parser parser = new Parser(model.Token);
+            string token = parser.ParseToken();
+            cookie["token"] = token;
+            Response.Cookies.Set(cookie);
+            vk.Authorize(token);
             Session["VkApi"] = vk;
             ViewBag.User = GetUserInform(vk);
             return View();

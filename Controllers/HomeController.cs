@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VK_Analyze.Controllers.functions;
@@ -13,14 +14,10 @@ namespace VK_Analyze.Controllers
 {
     public class HomeController : Controller
     {
-         VkApi vk;
-        VkNet.Model.User userInfo;
-       
 
         public HomeController()
         {
-            CookieTokenWorker cookie = new CookieTokenWorker("VkAnalyses");
-            vk = cookie.GetVkApiFromCookie();
+
         }
 
 
@@ -29,54 +26,50 @@ namespace VK_Analyze.Controllers
             return View();
         }
 
-        public ActionResult PageWorker()
-        {
-            return View();
-        }
+
 
         [HttpGet]
-        public ActionResult Friends(string userID = "0")
+        public ActionResult Friends()
         {
             VkApi vk = (VkApi)Session["VkApi"];
-            Dictionary<string, int> Dict = VkFriends.AnalyseFriends(vk);
+            UserFriendsView userChoise = new UserFriendsView();
+            userChoise.ScreenName = VkAccount.GetAccountInfo(vk).ScreenName;
+            return Friends(userChoise);
+        }
 
+        [HttpPost]
+        public ActionResult Friends(UserFriendsView userChoise)
+        {
+
+            VkApi vk = (VkApi)Session["VkApi"];
+            long userID = VkAccount.GetAccountInfo(vk, userChoise.ScreenName).Id;
+            Dictionary<string, int> Dict = VkFriends.GetDictionaryFriendsGroupByCity(vk, userID);
             ViewBag.Citys = supportFunction.Converter.ToCityInfoCollection(Dict).ToList();
+            string js_citys = supportFunction.Converter.ToJSArray("Город", "Люди", Dict);
+            string js_data = $@"var data = google.visualization.arrayToDataTable({js_citys});";
+            ViewBag.js_arrayFriends = js_data;
+
             return View();
         }
 
+        private void WriteCitysToViewBag(VkApi vk, long userID)
+        {
+          
+        }
 
 
-        //[HttpPost]
-        //public ActionResult Friends(UserFriendsView model)
-        //{
-        //    ViewBag.User = userInfo;
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            CookieTokenWorker cookie = new CookieTokenWorker(new HttpCookie("VkAnalyses"));
-        //            VkApi vkApi = cookie.GetVkApiFromCookie();
-        //            ViewBag.Users = VkFriends.GetUsers(vkApi);
-        //        }
-        //        catch(Exception)
-        //        {
-        //            ViewBag.Users = new VkNet.Model.User[0];
-        //        }
-        //    }
-        //    return View();
-        //}
 
 
         public ActionResult About()
         {
-            ViewBag.User = userInfo;
+
             ViewBag.Message = "Страница информации";
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.User = userInfo;
+
             ViewBag.Message = "Контактная информация";
             return View();
         }

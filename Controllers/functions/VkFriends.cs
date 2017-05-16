@@ -9,10 +9,8 @@ namespace VK_Analyze.Controllers.functions
 {
     public class VkFriends
     {
-        public static VkNet.Model.User[] GetUsers(VkApi vk)
-        {
-            long userId = VkAccount.GetAccountInfo(vk).Id;
-            
+        public static VkNet.Model.User[] GetUsers(VkApi vk, long userId)
+        {   
             VkNet.Model.RequestParams.FriendsGetParams categories = new VkNet.Model.RequestParams.FriendsGetParams();
             categories.Fields = VkNet.Enums.Filters.ProfileFields.All;
             categories.UserId = userId;
@@ -21,9 +19,9 @@ namespace VK_Analyze.Controllers.functions
             return userList.ToArray();
         }
 
-        public static Dictionary<string,int> AnalyseFriends(VkApi vk)
+        public static Dictionary<string,int> GetDictionaryFriendsGroupByCity(VkApi vk, long userID)
         {
-            VkNet.Model.User[] friends = GetUsers(vk);
+            VkNet.Model.User[] friends = GetUsers(vk,userID);
             Dictionary<string, int> cityDictionary = new Dictionary<string, int>();
             foreach (VkNet.Model.User item in friends)
             {
