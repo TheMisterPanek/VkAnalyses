@@ -209,13 +209,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\functions\CookieTokenWorker.cs" />
     <Compile Include="Controllers\functions\Parser.cs" />
+    <Compile Include="Controllers\functions\SessionWorker.cs" />
     <Compile Include="Controllers\functions\VkAccount.cs" />
     <Compile Include="Controllers\functions\VkFriends.cs" />
     <Compile Include="Controllers\functions\VkLogin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\supportFunction\CityInfo.cs" />
     <Compile Include="Controllers\supportFunction\Converter.cs" />
+    <Compile Include="Controllers\supportFunction\IgnoreSingle.cs" />
     <Compile Include="Controllers\supportFunction\MathFunctions.cs" />
     <Compile Include="Controllers\supportFunction\UserInfo_Likes.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
@@ -290,6 +291,7 @@
     <Content Include="Views\Worker\PageWorker.cshtml" />
     <Content Include="Views\Worker\PublicationWorker.cshtml" />
     <Content Include="Views\Home\FriendsDiagram.cshtml" />
+    <Content Include="Errors\404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

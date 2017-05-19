@@ -7,12 +7,19 @@ namespace VK_Analyze.Controllers.supportFunction
 {
     public static class Converter
     {
-        public static IEnumerable<CityInfo> ToCityInfoCollection(Dictionary<string,int> citys)
+        public static IEnumerable<CityInfo> ToCityInfoCollection(Dictionary<string,int> citys, IgnoreSingle ignoreSingle = IgnoreSingle.None)
         {
             List<CityInfo> cityInfoCollection = new List<CityInfo>();
 
             foreach (string key in citys.Keys)
             {
+                if(ignoreSingle==IgnoreSingle.Ignore)
+                {
+                    if(citys[key]<=1)
+                    {
+                        continue;
+                    }
+                }
                 cityInfoCollection.Add(new CityInfo(key, citys[key]));
             }
 

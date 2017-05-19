@@ -2,32 +2,21 @@
     ViewBag.Title = "Домашнаяя страница";
 }
 
-
-
-
-
-
-
-@*<table>
-    <tr>
-        <td>Photo</td>
-        <td>FirstName</td>
-        <td>LastName</td>
-        <td>City</td>
-    </tr>
-   
-    @foreach (VkNet.Model.User item in ViewBag.Friends)
-    {
-        <tr>
-            <td><img class="friendImage" src="@item.Photo100"/></td>
-            <td>@item.FirstName</td>
-            <td>@item.LastName</td>
-            @if (item.City != null)
-            {
-              <td>@item.City.Title</td>
-            }
-        </tr>
-    }
-
-    
-</table>*@
+<h1>Добро пожаловать на на VK Analyses</h1>
+<h3>Здесь вы сможете получить информацию о вашей странице</h3>
+<ul>
+    <li><h4>Посмотреть процентное соотношение ваших друзей и посмотреть диаграмму</h4></li>
+    <li><h4>Посмотреть, кто и сколько лайков поставил на вашей странице</h4></li>
+</ul>
+<hr />
+@if (Session["VkApi"] == null)
+{
+    <h3>
+        Для начала работы, вам нужно авторизоваться
+    </h3>
+} 
+else{
+    <h3>Для того, что бы запустить сканирование, 
+    вам нужно выбрать вкладку по информации, 
+    которая вам наиболее интересна</h3>
+}

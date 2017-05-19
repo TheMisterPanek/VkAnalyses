@@ -5,7 +5,7 @@
     VkNet.VkApi vk = (VkNet.VkApi)Session["VkApi"];
     if (vk != null)
     {
-       userName  = vk.Account.GetProfileInfo().FirstName;
+        userName = vk.Account.GetProfileInfo().FirstName;
     }
 }
 
@@ -13,13 +13,13 @@
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <h4 style="color:white;">@userName</h4>
+            @Html.ActionLink(userName, "Login", null,htmlAttributes: new { @class = "dropdown",style="color:white" })
         </li>
     </ul>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Авторизация", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Авторизация", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink",style="color:white;" })</li>
     </ul>
 }

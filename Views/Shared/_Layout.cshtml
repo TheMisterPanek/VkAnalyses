@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top main-navbar">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,28 +31,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("VK Analyses", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("VK Analyses", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", style = "color:white;" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { style = "color:white;" })</li>
                     @if (!string.IsNullOrEmpty(userName))
                     {
                         @*<li>@Html.ActionLink("О программе", "About", "Home")</li>
                             <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
-                        <li>@Html.ActionLink("Друзья", "Friends", "Home")</li>
+                        <li>@Html.ActionLink("Друзья", "Friends", "Home", new { style = "color:white;" })</li>
                        <li class="dropdown">
 
-                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white">
                                Работа с аккаунтом
                                <span class="caret"></span>
                            </a>
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    @Html.ActionLink("Работа со страницей", "PageWorker", "Worker")
+                                    @Html.ActionLink("Работа со страницей", "PageWorker", "Worker", new { style = "color:black;" })
                                 <li>
-                                    @Html.ActionLink("Работа со стеной", "PageWorker", "Worker")
+                                    @Html.ActionLink("Работа со стеной", "PageWorker", "Worker", new { style = "color:black;" })
                                 </li>
                             </ul>
                         </li>

@@ -30,16 +30,17 @@
                 <div class="form-group">
                     @using (Html.BeginForm("Friends", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                    <h4>Введите ID пользователя, которого нужно просканировать.</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.ScreenName, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.ScreenName, new { @class = "form-control" })
-                            <p><input type="submit" value="Проверить" /></p>
+                        <h4>Введите ID пользователя, которого нужно просканировать.</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+
+                            @Html.LabelFor(m => m.ScreenName, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.ScreenName, new { @class = "form-control" })
+                                <p><input type="submit" value="Проверить" /></p>
+                            </div>
                         </div>
-                    </div>
                     }
                 </div>
 
@@ -52,19 +53,18 @@
                 <div class="row">
 
                     @foreach (CityInfo city in citys)
-            {
-                percent = Math.Round(city.CountFriends / countCitys, 4) * 100;
-                if (percent > 1)
-                {
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div style="font-size:@MathFunctions.Clamp((int)percent,10,70)px">
-                                <div class="col-md-8">@city.City</div>
-                                <div class="col-md-2">@percent%</div>
+                    {
+                        percent = Math.Round(city.CountFriends / countCitys, 4) * 100;
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div style="font-size:@MathFunctions.Clamp((int)percent,10,70)px">
+                                    <div class="col-md-8">@city.City</div>
+                                    <div class="col-md-2">@percent%</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                        }
+
                     }
                 </div>
             </div>

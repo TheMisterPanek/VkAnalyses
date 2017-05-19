@@ -23,6 +23,11 @@ namespace VK_Analyze.Controllers
 
         public ActionResult Index()
         {
+            if (Session["VkApi"] == null)
+            {
+                SessionWorker.UpdateSession(new CookieTokenWorker(Request.Cookies["VkAnalyses"]), Session);
+                ViewBag.User = VkAccount.GetAccountInfo((VkApi)Session["VkApi"]);
+            }
             return View();
         }
 
@@ -44,8 +49,10 @@ namespace VK_Analyze.Controllers
             VkApi vk = (VkApi)Session["VkApi"];
             long userID = VkAccount.GetAccountInfo(vk, userChoise.ScreenName).Id;
             Dictionary<string, int> Dict = VkFriends.GetDictionaryFriendsGroupByCity(vk, userID);
-            ViewBag.Citys = supportFunction.Converter.ToCityInfoCollection(Dict).ToList();
-            string js_citys = supportFunction.Converter.ToJSArray("Город", "Люди", Dict);
+            ViewBag.Citys = supportFunction.Converter.ToCityInfoCollection(Dict, supportFunction.IgnoreSingle.Ignore).ToList();
+            List<KeyValuePair<string, int>> listCitys = (from x in Dict where x.Value > 1 select x).ToList();
+
+            string js_citys = supportFunction.Converter.ToJSArray("Город", "Люди", listCitys);
             string js_data = $@"var data = google.visualization.arrayToDataTable({js_citys});";
             ViewBag.js_arrayFriends = js_data;
 
@@ -54,7 +61,7 @@ namespace VK_Analyze.Controllers
 
         private void WriteCitysToViewBag(VkApi vk, long userID)
         {
-          
+
         }
 
 

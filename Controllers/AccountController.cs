@@ -26,16 +26,20 @@ namespace VK_Analyze.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            CookieTokenWorker cookie = new CookieTokenWorker(Request.Cookies["VkAnalyses"]);
-            VkApi vk = cookie.GetVkApiFromCookie();
-            if (vk == null)
-            {
-                vk = (VkApi)Session["VkApi"];
-            }
-            else
-            {
-                Session["VkApi"] = vk;
-            }
+            HttpCookie cookieReq = Request.Cookies["VkAnalyses"];
+            CookieTokenWorker cookie = new CookieTokenWorker(cookieReq);
+            //VkApi vk = cookie.GetVkApiFromCookie();
+            //if (vk == null)
+            //{
+            //    vk = (VkApi)Session["VkApi"];
+            //}
+            //else
+            //{
+            //    Session["VkApi"] = vk;
+            //}
+
+            SessionWorker.UpdateSession(new CookieTokenWorker(cookieReq), Session);
+            VkApi vk = (VkApi)Session["VkApi"];
             ViewBag.User = GetUserInform(vk);
             return View();
         }
@@ -46,12 +50,21 @@ namespace VK_Analyze.Controllers
         [AllowAnonymous]
         public ActionResult Login(LoginViewModel model)
         {
-            VkApi vk = new VkApi();
-            HttpCookie cookie = new HttpCookie("VkAnalyses");
             Parser parser = new Parser(model.Token);
             string token = parser.ParseToken();
+
+            if (!VkLogin.isValidToken(token))
+            {
+                ViewBag.Message = $"Ваш токен не является валидным";
+                return View();
+            }
+
+            VkApi vk = new VkApi();
+
+            HttpCookie cookie = new HttpCookie("VkAnalyses");
             cookie["token"] = token;
-            Response.Cookies.Set(cookie);
+            Response.Cookies.Add(cookie);
+
             vk.Authorize(token);
             Session["VkApi"] = vk;
             ViewBag.User = GetUserInform(vk);
@@ -60,70 +73,15 @@ namespace VK_Analyze.Controllers
 
         private VkNet.Model.User GetUserInform(VkNet.VkApi vk, int id = 1)
         {
-            VkNet.Model.User user  = VkAccount.GetAccountInfo(vk);
+            VkNet.Model.User user = VkAccount.GetAccountInfo(vk);
             return user;
         }
 
 
-        //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Запрос перенаправления к внешнему поставщику входа
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
 
 
 
 
-
-
-
-
-
-        #region Вспомогательные приложения
-
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
-        internal class ChallengeResult : HttpUnauthorizedResult
-        {
-            public ChallengeResult(string provider, string redirectUri)
-                : this(provider, redirectUri, null)
-            {
-            }
-
-            public ChallengeResult(string provider, string redirectUri, string userId)
-            {
-                LoginProvider = provider;
-                RedirectUri = redirectUri;
-                UserId = userId;
-            }
-
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
-
-
-        }
-        #endregion
+        
     }
 }

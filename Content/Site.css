@@ -23,7 +23,16 @@ textarea {
     max-width: 280px;
 }
 
+.main-navbar{
+    background-color:#507299;
+    color:white;
+}
 
 .friendImage{
     padding:5px;
+}
+
+.navbar-link{
+    color:white;
+    font-size:50px;
 }
