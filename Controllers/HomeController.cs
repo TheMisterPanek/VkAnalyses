@@ -15,6 +15,8 @@ namespace VK_Analyze.Controllers
     public class HomeController : Controller
     {
 
+        const int COUNT_FRIEND = 300;
+
         public HomeController()
         {
 
@@ -31,33 +33,49 @@ namespace VK_Analyze.Controllers
             return View();
         }
 
-
+        // GET: Error
+        public ActionResult HttpError(string message)
+        {
+            ViewBag.Message = Session["error"];
+            return View();
+        }
 
         [HttpGet]
-        public ActionResult Friends()
+        public async Task<ActionResult> Friends()
         {
             VkApi vk = (VkApi)Session["VkApi"];
             UserFriendsView userChoise = new UserFriendsView();
             userChoise.ScreenName = VkAccount.GetAccountInfo(vk).ScreenName;
-            return Friends(userChoise);
+            return await Friends(userChoise);
         }
 
         [HttpPost]
-        public ActionResult Friends(UserFriendsView userChoise)
+        public async Task<ActionResult> Friends(UserFriendsView userChoise)
         {
-
             VkApi vk = (VkApi)Session["VkApi"];
-            long userID = VkAccount.GetAccountInfo(vk, userChoise.ScreenName).Id;
-            Dictionary<string, int> Dict = VkFriends.GetDictionaryFriendsGroupByCity(vk, userID);
-            ViewBag.Citys = supportFunction.Converter.ToCityInfoCollection(Dict, supportFunction.IgnoreSingle.Ignore).ToList();
-            List<KeyValuePair<string, int>> listCitys = (from x in Dict where x.Value > 1 select x).ToList();
+           
+            Action getCitys = new Action(() =>
+            {
+                long userID = VkAccount.GetAccountInfo(vk, userChoise.ScreenName).Id;
+                Dictionary<string, int> Dict = VkFriends.GetDictionaryFriendsGroupByCity(vk, userID);
+                ViewBag.Citys = supportFunction.Converter.ToCityInfoCollection(Dict, supportFunction.IgnoreSingle.Ignore).ToList();
 
-            string js_citys = supportFunction.Converter.ToJSArray("Город", "Люди", listCitys);
-            string js_data = $@"var data = google.visualization.arrayToDataTable({js_citys});";
-            ViewBag.js_arrayFriends = js_data;
+                List<KeyValuePair<string, int>> listCitys = (from x in Dict where x.Value > 1 select x).ToList();
+                string js_citys = supportFunction.Converter.ToJSArray("Город", "Люди", listCitys);
+                string js_data = $@"var data = google.visualization.arrayToDataTable({js_citys});";
+                ViewBag.js_arrayFriends = js_data;
+            });
+
+            await Task.Run(getCitys); 
 
             return View();
         }
+
+        public ActionResult _FriendsInfo()
+        {
+            return PartialView("_FriendsInfo");
+        }
+
 
         private void WriteCitysToViewBag(VkApi vk, long userID)
         {

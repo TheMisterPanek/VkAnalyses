@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <a href="Home/Friends"><h1>ТЕКСТ</h1></a>
     <div class="navbar navbar-inverse navbar-fixed-top main-navbar">
         <div class="container">
             <div class="navbar-header">
@@ -35,24 +36,26 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { style = "color:white;" })</li>
+                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, new { style = "color:white;" })</li>
                     @if (!string.IsNullOrEmpty(userName))
                     {
                         @*<li>@Html.ActionLink("О программе", "About", "Home")</li>
                             <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
                         <li>@Html.ActionLink("Друзья", "Friends", "Home", new { style = "color:white;" })</li>
-                       <li class="dropdown">
+                      //  <li>@Html.Action("","Worker","PublicationWorker")</li>
+                        <li class="dropdown">
 
-                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white">
-                               Работа с аккаунтом
-                               <span class="caret"></span>
-                           </a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white">
+                                Работа с аккаунтом
+                                <span class="caret"></span>
+                            </a>
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    @Html.ActionLink("Работа со страницей", "PageWorker", "Worker", new { style = "color:black;" })
+                                    @Html.ActionLink("Работа со страницей", "PageWorker", "Worker", new { area = "" }, new { style = "color:black;" })
+                                </li>
                                 <li>
-                                    @Html.ActionLink("Работа со стеной", "PageWorker", "Worker", new { style = "color:black;" })
+                                    @Html.ActionLink("Работа со стеной", "PublicationWorker", "Worker", new { area = "" }, new { style = "color:black;" })
                                 </li>
                             </ul>
                         </li>

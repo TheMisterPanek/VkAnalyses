@@ -1,0 +1,57 @@
+﻿@using VK_Analyze.Models
+@using VK_Analyze.Controllers.supportFunction;
+
+@{ 
+    List<CityInfo> citys = ViewBag.Citys;
+    citys = (from x in citys orderby x.CountFriends descending select x).ToList();
+
+
+    float countCitys = 0;
+    foreach (CityInfo item in citys)
+    {
+        countCitys += item.CountFriends;
+    }
+
+    double percent = 0;
+
+}
+
+<div id="Info">
+   
+        @foreach (CityInfo city in citys)
+        {
+            percent = Math.Round(city.CountFriends / countCitys, 4) * 100;
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div style="font-size:@MathFunctions.Clamp((int)percent,15,90)px">
+                        <div class="col-md-8">@city.City</div>
+                        <div class="col-md-2">@percent%</div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="col-md-6">
+        <script type="text/javascript">
+                            google.charts.load('current', { 'packages': ['corechart'] });
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            function drawChart() {
+
+                                @Html.Raw(ViewBag.js_arrayFriends);
+
+                                var options = {
+                                    title: 'Диаграмма соотношения городов к общей численности'
+                                };
+
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                                chart.draw(data, options);
+                            }
+        </script>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+ 
+</div>

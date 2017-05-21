@@ -11,6 +11,7 @@ namespace VK_Analyze.Controllers.functions
     {
         public static void UpdateSession(CookieTokenWorker cookie,HttpSessionStateBase Session)
         {
+            
             VkApi vk = (VkApi)Session["VkApi"];
             vk = cookie.GetVkApiFromCookie();
             if (vk == null)

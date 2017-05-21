@@ -207,6 +207,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\functions\CookieTokenWorker.cs" />
     <Compile Include="Controllers\functions\Parser.cs" />
     <Compile Include="Controllers\functions\SessionWorker.cs" />
@@ -290,8 +291,8 @@
     <Content Include="Views\Home\Friends.cshtml" />
     <Content Include="Views\Worker\PageWorker.cshtml" />
     <Content Include="Views\Worker\PublicationWorker.cshtml" />
-    <Content Include="Views\Home\FriendsDiagram.cshtml" />
-    <Content Include="Errors\404.cshtml" />
+    <Content Include="Views\Home\_FriendsInfo.cshtml" />
+    <Content Include="Views\Home\HttpError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
